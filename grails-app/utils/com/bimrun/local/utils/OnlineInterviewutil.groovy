@@ -17,11 +17,11 @@ class OnlineInterviewutil {
                 ids.add(ids.get(index));
                 //随机的下标的元素和位置最后一位没有使用过的元素换取位置
                 ids.set(index, ids.get(size - i - 1))
-                ids.set(ids.size() - i - 1, ids.get(size + i))
+//                ids.set(ids.size() - i - 1, ids.get(size + i))
 //                ids[index] = ids[size - i - 1];
 //                ids[ids.length - i - 1] = randomIds.get(i)
             }
-            return ids.subList(size, size + count - 1);
+            return ids.subList(size, size + count);
         }
 
     }
