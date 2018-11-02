@@ -1,4 +1,4 @@
-package com.bimrun.local
+package com.demo.local
 
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification

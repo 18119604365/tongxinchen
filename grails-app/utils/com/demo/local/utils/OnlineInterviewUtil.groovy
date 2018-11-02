@@ -1,6 +1,6 @@
-package com.bimrun.local.utils
+package com.demo.local.utils
 
-class OnlineInterviewutil {
+class OnlineInterviewUtil {
 
 
     static List<Long> getRandomSubjects(List<Long> ids, int count) {

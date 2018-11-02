@@ -81,6 +81,8 @@ grails:
                 scriptlets: html
                 taglib: none
                 staticparts: none
+    cors:
+        enabled: true
 endpoints:
     jmx:
         unique-names: true
@@ -103,7 +105,7 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: create-drop
+            dbCreate: update
             url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF8
     test:
         dataSource:

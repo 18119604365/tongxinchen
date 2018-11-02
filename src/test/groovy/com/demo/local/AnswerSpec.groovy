@@ -1,9 +1,9 @@
-package com.bimrun.local
+package com.demo.local
 
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class AnswerInfoSpec extends Specification implements DomainUnitTest<AnswerInfo> {
+class AnswerSpec extends Specification implements DomainUnitTest<Answer> {
 
     def setup() {
     }
