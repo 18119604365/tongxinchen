@@ -69,11 +69,13 @@ class ApiController {
             List<Subject> subjectList = Subject.findAllBySubjectType(subjectType)
             List<Long> ids = subjectList*.id
             List<Long> filterIds = OnlineInterviewUtil.getRandomSubjects(ids, it.count)
-            List<Subject> filterSubjectList = []
-            filterIds.each { Long id ->
-                Subject subject = Subject.findById(id)
-                filterSubjectList.add(subject)
-            }
+
+            List<Subject> filterSubjectList = subjectList.findAll({filterIds.contains(it.id)})
+//            List<Subject> filterSubjectList = []
+//            filterIds.each { Long id ->
+//                Subject subject = Subject.findById(id)
+//                filterSubjectList.add(subject)
+//            }
             allSubjectList.addAll(filterSubjectList)
 
         }
