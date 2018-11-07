@@ -98,6 +98,7 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
+    dialect: "org.hibernate.dialect.MySQL5InnoDBDialect"
     driverClassName: com.mysql.jdbc.Driver
     username: root
     password: Juyee123456
@@ -106,15 +107,15 @@ environments:
     development:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF8
+            url: jdbc:mysql://192.168.1.111:3306/test?useUnicode=true&characterEncoding=UTF8
     test:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF8
+            url: jdbc:mysql://192.168.1.111:3306/test?useUnicode=true&characterEncoding=UTF8
     production:
         dataSource:
-            dbCreate: none
-            url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF8
+            dbCreate: update
+            url: jdbc:mysql://192.168.1.111:3306/test?useUnicode=true&characterEncoding=UTF8
             properties:
                 jmxEnabled: true
                 initialSize: 5

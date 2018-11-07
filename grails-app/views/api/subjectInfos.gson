@@ -1,5 +1,4 @@
 import com.demo.local.Answer
-import com.demo.local.SubjectType
 
 model {
     List<Answer> INTELLIGENCE
@@ -7,8 +6,6 @@ model {
     List<Answer> API
     List<Answer> CODE
     List<Answer> EXTEND
-
-
 
 
 }
