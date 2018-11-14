@@ -100,22 +100,25 @@ dataSource:
     jmxExport: true
     dialect: "org.hibernate.dialect.MySQL5InnoDBDialect"
     driverClassName: com.mysql.jdbc.Driver
-    username: root
+    username: Juyee
     password: Juyee123456
+#    username: root
+#    password: Juyee123456
 
 environments:
     development:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://192.168.1.111:3306/test?useUnicode=true&characterEncoding=UTF8
+            url: jdbc:mysql://192.168.1.125:3306/online_exam?useUnicode=true&characterEncoding=UTF8
     test:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://192.168.1.111:3306/test?useUnicode=true&characterEncoding=UTF8
+            url: jdbc:mysql://192.168.1.125:3306/online_exam?useUnicode=true&characterEncoding=UTF8
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://192.168.1.111:3306/test?useUnicode=true&characterEncoding=UTF8
+            url: jdbc:mysql://192.168.1.125:3306/online_exam?useUnicode=true&characterEncoding=UTF8
+#            url: jdbc:mysql://192.168.1.111:3306/online_exam?useUnicode=true&characterEncoding=UTF8
             properties:
                 jmxEnabled: true
                 initialSize: 5

@@ -33,18 +33,14 @@ class ApiController {
      * @param gender
      * @param age
      * @return
-     * curl -d'name=王源&phoneNumber=18119694365&age=24&gender=true' http://localhost:8080/api/addPerson
+     * curl -d '{"name":"知乎","phoneNumber":"18111212309","age":"24","gender":"true"}' -H "Content-Type: application/json" http://localhost:8080/api/addPerson
      */
-    def addPerson(String name, String phoneNumber, Boolean gender, int age) {
-        log.debug("name" + name)
-        def person = new Person(name: name, phoneNumber: phoneNumber, interviewDate: new Date())
-        person.isCheck = false
-        person.gender = gender
-        person.age = age
+    def addPerson(Person person){
+        log.debug("name="+person.name)
         person.interviewDate = new Date()
-        person.save(flush: true)
+        person.isCheck = false
+        person.save(flush:true)
         render person as JSON
-
 
     }
 
