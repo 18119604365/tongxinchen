@@ -1,0 +1,49 @@
+import com.demo.local.Question
+
+model {
+    List<Question> INTELLIGENCE
+    List<Question> BASE
+    List<Question> API
+    List<Question> CODE
+    List<Question> EXTEND
+
+
+
+
+
+
+}
+
+json {
+    INTELLIGENCE(INTELLIGENCE) {
+        Question question = (Question) it
+        id question.id
+        questionType question.questionType
+        content question.content
+        options question.options
+    }
+    BASE(BASE) {
+        Question question = (Question) it
+        id question.id
+        questionType question.questionType
+        content question.content
+    }
+    API(API) {
+        Question question = (Question) it
+        id question.id
+        questionType question.questionType
+        content question.content
+    }
+    CODE(CODE) {
+        Question question = (Question) it
+        id question.id
+        questionType question.questionType
+        content question.content
+    }
+    EXTEND(EXTEND) {
+        Question question = (Question) it
+        id question.id
+        questionType question.questionType
+        content question.content
+    }
+}

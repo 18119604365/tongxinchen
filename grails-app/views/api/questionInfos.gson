@@ -14,41 +14,41 @@ json {
 
     INTELLIGENCE(INTELLIGENCE) { Answer answer ->
         id answer.id
-        subjectId answer.subject.id
-        subjectType answer.subject.subjectType
-        content answer.subject.content
+        questionId answer.question.id
+        questionType answer.question.questionType
+        content answer.question.content
         answerInfo answer.answerInfo
 
     }
     BASE(BASE) { Answer answer ->
         id answer.id
-        subjectId answer.subject.id
-        subjectType answer.subject.subjectType
-        content answer.subject.content
+        questionId answer.question.id
+        questionType answer.question.questionType
+        content answer.question.content
         answerInfo answer.answerInfo
 
     }
     API(API) { Answer answer ->
         id answer.id
-        subjectId answer.subject.id
-        subjectType answer.subject.subjectType
-        content answer.subject.content
+        questionId answer.question.id
+        questionType answer.question.questionType
+        content answer.question.content
         answerInfo answer.answerInfo
 
     }
     CODE(CODE) { Answer answer ->
         id answer.id
-        subjectId answer.subject.id
-        subjectType answer.subject.subjectType
-        content answer.subject.content
+        questionId answer.question.id
+        questionType answer.question.questionType
+        content answer.question.content
         answerInfo answer.answerInfo
 
     }
     EXTEND(EXTEND) { Answer answer ->
         id answer.id
-        subjectId answer.subject.id
-        subjectType answer.subject.subjectType
-        content answer.subject.content
+        questionId answer.question.id
+        questionType answer.question.questionType
+        content answer.question.content
         answerInfo answer.answerInfo
 
     }

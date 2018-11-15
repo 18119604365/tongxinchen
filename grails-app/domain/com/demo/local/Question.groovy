@@ -2,16 +2,16 @@ package com.demo.local
 import grails.compiler.GrailsCompileStatic
 
 @GrailsCompileStatic
-class Subject {
+class Question {
     Long id;
-    SubjectType subjectType
+    QuestionType questionType
     String content
     int score
     List<String> options
     Date createDate
 
     static constraints = {
-        subjectType blank : false
+        questionType blank : false
     }
 
     static mapping = {

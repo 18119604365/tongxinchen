@@ -3,7 +3,7 @@ package com.demo.local.utils
 class OnlineInterviewUtil {
 
 
-    static List<Long> getRandomSubjects(List<Long> ids, int count) {
+    static List<Long> getRandomQuestions(List<Long> ids, int count) {
         int index = 0
         int size = ids.size();
         if (ids.size() < count) {

@@ -15,7 +15,7 @@
         let request = new XMLHttpRequest();
 
         let data = [dto2];
-        request.open('post', 'http://localhost:8080/api/subjects')
+        request.open('post', 'http://localhost:8080/api/questions')
 
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify(data));

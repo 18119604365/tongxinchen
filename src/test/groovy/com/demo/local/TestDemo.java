@@ -12,7 +12,7 @@ public class TestDemo {
         list.add(22);
         list.add(33);
         list.add(44);
-        List <Integer> ids = getRandomSubjects(list,count);
+        List <Integer> ids = getRandomQuestions(list,count);
 
         System.out.println(ids.size());
         for (Integer s :ids){
@@ -21,7 +21,7 @@ public class TestDemo {
 
 
     }
-    private static List<Integer> getRandomSubjects(List<Integer> ids, int count) {
+    private static List<Integer> getRandomQuestions(List<Integer> ids, int count) {
         int index = 0;
         int size = ids.size();
         if (ids.size() < count) {

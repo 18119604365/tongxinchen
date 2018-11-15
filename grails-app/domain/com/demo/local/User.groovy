@@ -2,8 +2,7 @@ package com.demo.local
 import grails.compiler.GrailsCompileStatic
 
 @GrailsCompileStatic
-class Person {
-
+class User {
     Long id
     String name
     Boolean gender

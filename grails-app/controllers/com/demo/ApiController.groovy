@@ -1,9 +1,9 @@
 package com.demo
 
 import com.demo.local.Answer
-import com.demo.local.Person
-import com.demo.local.Subject
-import com.demo.local.SubjectType
+import com.demo.local.User
+import com.demo.local.Question
+import com.demo.local.QuestionType
 import com.demo.local.utils.OnlineInterviewUtil
 import grails.converters.JSON
 
@@ -14,15 +14,15 @@ class ApiController {
 
     /**
      * 添加试题
-     * @param subject
+     * @param question
      * @return
-     * curl -d '{"subjectType":"INTELLIGENCE","content":"请问Java的基本数据类型有哪些","score":"3","options":["A.Java的数据","B.java入门"]}' -H "Content-Type: application/json" http://localhost:8080/api/addSubject
+     * curl -d '{"questionType":"INTELLIGENCE","content":"请问Java的基本数据类型有哪些","score":"3","options":["A.Java的数据","B.java入门"]}' -H "Content-Type: application/json" http://localhost:8080/api/addQuestion
      */
-    def addSubject(Subject subject) {
-        log.debug("subjectType =" + subject.subjectType)
-        subject.createDate = new Date()
-        subject.save(flush: true)
-        render subject as JSON
+    def addQuestion(Question question) {
+        log.debug("questionType =" + question.questionType)
+        question.createDate = new Date()
+        question.save(flush: true)
+        render question as JSON
 
     }
 
@@ -33,59 +33,59 @@ class ApiController {
      * @param gender
      * @param age
      * @return
-     * curl -d '{"name":"知乎","phoneNumber":"18111212309","age":"24","gender":"true"}' -H "Content-Type: application/json" http://localhost:8080/api/addPerson
+     * curl -d '{"name":"知乎","phoneNumber":"18111212309","age":"24","gender":"true"}' -H "Content-Type: application/json" http://localhost:8080/api/addUser
      */
-    def addPerson(Person person){
-        log.debug("name="+person.name)
-        person.interviewDate = new Date()
-        person.isCheck = false
-        person.save(flush:true)
-        render person as JSON
+    def addUser(User user){
+        log.debug("name="+user.name)
+        user.interviewDate = new Date()
+        user.isCheck = false
+        user.save(flush:true)
+        render user as JSON
 
     }
 
     /**
      * 获取面试题
-     * @param subjectDTO
+     * @param questionDTO
      * @return
-     * curl -v -H 'Content-Type: application/json' -d '{"subjectDTOList":[{"count":1,"subjectType":"INTELLIGENCE"}]}' localhost:8080/api/subjects
+     * curl -v -H 'Content-Type: application/json' -d '{"questionDTOList":[{"count":1,"questionType":"INTELLIGENCE"}]}' localhost:8080/api/questions
      */
 
 
-    def subjects(SubjectsDTO subjectDTO) {
-        List<Subject> allSubjectList = []
-        List<SubjectDTO> subjectDTOList = subjectDTO.subjectDTOList
+    def questions(QuestionsDTO questionDTO) {
+        List<Question> allQuestionList = []
+        List<QuestionDTO> questionDTOList = questionDTO.questionDTOList
 
-        subjectDTOList.each {
-            SubjectType subjectType = it.subjectType
+        questionDTOList.each {
+            QuestionType questionType = it.questionType
 //            if (subjectType.getCentValue().equals("智力题")) {
 //                List<Subject> subjectList = Subject.findAllBySubjectType(subjectType)
 //                allSubjectList.addAll(subjectList)
 //            } else {
-            List<Subject> subjectList = Subject.findAllBySubjectType(subjectType)
-            List<Long> ids = subjectList*.id
-            List<Long> filterIds = OnlineInterviewUtil.getRandomSubjects(ids, it.count)
+            List<Question> questionList = Question.findAllByQuestionType(questionType)
+            List<Long> ids = questionList*.id
+            List<Long> filterIds = OnlineInterviewUtil.getRandomQuestions(ids, it.count)
 
-            List<Subject> filterSubjectList = subjectList.findAll({filterIds.contains(it.id)})
+            List<Question> filterQuestionList = questionList.findAll({filterIds.contains(it.id)})
 //            List<Subject> filterSubjectList = []
 //            filterIds.each { Long id ->
 //                Subject subject = Subject.findById(id)
 //                filterSubjectList.add(subject)
 //            }
-            allSubjectList.addAll(filterSubjectList)
+            allQuestionList.addAll(filterQuestionList)
 
         }
 
-        Map<SubjectType, List<Subject>> map = allSubjectList.groupBy { it.subjectType }
-        List<Subject> inteSubjectList = map.get(SubjectType.INTELLIGENCE)
-        List<Subject> baseSubjectList = map.get(SubjectType.BASE)
-        List<Subject> apiSubjectList = map.get(SubjectType.API)
-        List<Subject> codeSubjectList = map.get(SubjectType.CODE)
-        List<Subject> extendSubjectList = map.get(SubjectType.EXTEND)
+        Map<QuestionType, List<Question>> map = allQuestionList.groupBy { it.questionType }
+        List<Question> inteQuestionList = map.get(QuestionType.INTELLIGENCE)
+        List<Question> baseQuestionList = map.get(QuestionType.BASE)
+        List<Question> apiQuestionList = map.get(QuestionType.API)
+        List<Question> codeQuestionList = map.get(QuestionType.CODE)
+        List<Question> extendQuestionList = map.get(QuestionType.EXTEND)
 //        }
-        log.debug("count" + allSubjectList.size())
+        log.debug("count" + allQuestionList.size())
 
-        [INTELLIGENCE: inteSubjectList, BASE: baseSubjectList, API: apiSubjectList, CODE: codeSubjectList, EXTEND: extendSubjectList]
+        [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList]
 
 
     }
@@ -94,7 +94,7 @@ class ApiController {
      * 添加答题参数信息
      * @param answerDTO
      * @return
-     * curl -d '{"answerList":[{"person":{"id":4},"answerInfo":"A","subject":{"id":1}},{"person":{"id":4},"answerInfo":"B","subject":{"id":5}}]}' -H "Content-Type: application/json"    http://localhost:8080/api/addAnswerInfos
+     * curl -d '{"answerList":[{"user":{"id":4},"answerInfo":"A","question":{"id":1}},{"user":{"id":4},"answerInfo":"B","question":{"id":5}}]}' -H "Content-Type: application/json"    http://localhost:8080/api/addAnswerInfos
      */
     def addAnswerInfos(AnswerDTO answerDTO) {
         List<Answer> answerList = answerDTO.answerList
@@ -108,24 +108,24 @@ class ApiController {
 
 /**
  * 查询面试者答案详情
- * para personId
- * curl -d'personId=4' http://localhost:8080/api/subjectInfos
+ * para userId
+ * curl -d'userId=4' http://localhost:8080/api/questionInfos
  */
-    def subjectInfos(long personId) {
-        log.debug("personId" + personId)
-        Person person = Person.findById(personId)
-        person.isCheck = true
-        person.save(flush: true)
-        List<Answer> answerList = Answer.findAllByPerson(person, ["sort": "id", "order": "asc"])
-        Map<SubjectType, List<Answer>> map = answerList.groupBy { it.subject.subjectType }
-        List<Answer> inteAnswerList = map.get(SubjectType.INTELLIGENCE)
-        List<Answer> baseAnswerList = map.get(SubjectType.BASE)
-        List<Answer> apiAnswerList = map.get(SubjectType.API)
-        List<Answer> codeAnswerList = map.get(SubjectType.CODE)
-        List<Answer> extendAnswerList = map.get(SubjectType.EXTEND)
+    def questionInfos(long userId) {
+        log.debug("userId" + userId)
+        User user = User.findById(userId)
+        user.isCheck = true
+        user.save(flush: true)
+        List<Answer> answerList = Answer.findAllByUser(user, ["sort": "id", "order": "asc"])
+        Map<QuestionType, List<Answer>> map = answerList.groupBy { it.question.questionType }
+        List<Answer> inteAnswerList = map.get(QuestionType.INTELLIGENCE)
+        List<Answer> baseAnswerList = map.get(QuestionType.BASE)
+        List<Answer> apiAnswerList = map.get(QuestionType.API)
+        List<Answer> codeAnswerList = map.get(QuestionType.CODE)
+        List<Answer> extendAnswerList = map.get(QuestionType.EXTEND)
 
-//        List<SubjectType>  subjectTypeList = answerList*.subject*.subjectType
-//        List<SubjectType> filterSubjectTypeList = new ArrayList<>()
+//        List<SubjectType>  questionTypeList = answerList*.subject*.questionType
+//        List<QuestionType> filterQuestionTypeList = new ArrayList<>()
 //        for (SubjectType subjectType:subjectTypeList){
 //            if (!filterSubjectTypeList.contains(subjectType)){
 //                filterSubjectTypeList.add(subjectType)
@@ -153,13 +153,13 @@ class ApiController {
 }
 
 
-class SubjectsDTO {
-    List<SubjectDTO> subjectDTOList
+class QuestionsDTO {
+    List<QuestionDTO> questionDTOList
 }
 
-class SubjectDTO {
+class QuestionDTO {
     int count
-    SubjectType subjectType
+    QuestionType questionType
 }
 
 

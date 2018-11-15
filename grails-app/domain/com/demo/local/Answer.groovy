@@ -4,8 +4,8 @@ import grails.compiler.GrailsCompileStatic
 @GrailsCompileStatic
 class Answer {
     Long id
-    Person person
-    Subject subject;
+    User user
+    Question question;
     String answerInfo;
     Date createDate;
 
@@ -14,8 +14,8 @@ class Answer {
     }
 
     static mapping = {
-        person attr: "personId"
-        subject attr: "subjectId"
+        user attr: "userId"
+        question attr: "questionId"
 
 
     }
