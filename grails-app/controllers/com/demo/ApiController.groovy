@@ -77,11 +77,11 @@ class ApiController {
         }
 
         Map<QuestionType, List<Question>> map = allQuestionList.groupBy { it.questionType }
-        List<Question> inteQuestionList = map.get(QuestionType.INTELLIGENCE)
-        List<Question> baseQuestionList = map.get(QuestionType.BASE)
-        List<Question> apiQuestionList = map.get(QuestionType.API)
-        List<Question> codeQuestionList = map.get(QuestionType.CODE)
-        List<Question> extendQuestionList = map.get(QuestionType.EXTEND)
+        List<Question> inteQuestionList = map.get(QuestionType.INTELLIGENCE)?:[]
+        List<Question> baseQuestionList = map.get(QuestionType.BASE)?:[]
+        List<Question> apiQuestionList = map.get(QuestionType.API)?:[]
+        List<Question> codeQuestionList = map.get(QuestionType.CODE)?:[]
+        List<Question> extendQuestionList = map.get(QuestionType.EXTEND)?:[]
 //        }
         log.debug("count" + allQuestionList.size())
 
@@ -118,11 +118,11 @@ class ApiController {
         user.save(flush: true)
         List<Answer> answerList = Answer.findAllByUser(user, ["sort": "id", "order": "asc"])
         Map<QuestionType, List<Answer>> map = answerList.groupBy { it.question.questionType }
-        List<Answer> inteAnswerList = map.get(QuestionType.INTELLIGENCE)
-        List<Answer> baseAnswerList = map.get(QuestionType.BASE)
-        List<Answer> apiAnswerList = map.get(QuestionType.API)
-        List<Answer> codeAnswerList = map.get(QuestionType.CODE)
-        List<Answer> extendAnswerList = map.get(QuestionType.EXTEND)
+        List<Answer> inteAnswerList = map.get(QuestionType.INTELLIGENCE)?:[]
+        List<Answer> baseAnswerList = map.get(QuestionType.BASE)?:[]
+        List<Answer> apiAnswerList = map.get(QuestionType.API)?:[]
+        List<Answer> codeAnswerList = map.get(QuestionType.CODE)?:[]
+        List<Answer> extendAnswerList = map.get(QuestionType.EXTEND)?:[]
 
 //        List<SubjectType>  questionTypeList = answerList*.subject*.questionType
 //        List<QuestionType> filterQuestionTypeList = new ArrayList<>()
@@ -155,6 +155,7 @@ class ApiController {
 
 class QuestionsDTO {
     List<QuestionDTO> questionDTOList
+
 }
 
 class QuestionDTO {
