@@ -8,7 +8,7 @@ class User {
     Boolean gender
     int age
     String phoneNumber
-    Boolean isCheck
+    Boolean checked
     Date interviewDate
 //    Date totalTime
     int totalScore
