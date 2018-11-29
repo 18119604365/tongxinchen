@@ -62,15 +62,11 @@ class ApiController {
 
     def questions(QuestionsDTO questionDTO) {
         Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
-        Long userId
         if (userIdCookie){
-            userId = userIdCookie.value as Long
-        }
-        if (userId!=null) {
+            long userId = userIdCookie.value as Long
             User user1 = User.findById(userId)
             List<Answer> answerList = Answer.findAllByUser(user1)
             if (answerList.size()>0){
-
                 List<Question> questionList = answerList*.question
                 Map<QuestionType, List<Question>> map = questionList.groupBy { it.questionType }
                 List<Question> inteQuestionList = map.get(QuestionType.INTELLIGENCE) ?: []
@@ -78,30 +74,19 @@ class ApiController {
                 List<Question> apiQuestionList = map.get(QuestionType.API) ?: []
                 List<Question> codeQuestionList = map.get(QuestionType.CODE) ?: []
                 List<Question> extendQuestionList = map.get(QuestionType.EXTEND) ?: []
-                log.debug("count" + questionList.size())
 
+                log.debug("count" + questionList.size())
                 [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList]
             }else {List<Question> allQuestionList = []
                 List<QuestionDTO> questionDTOList = questionDTO.questionDTOList
 
                 questionDTOList.each {
                     QuestionType questionType = it.questionType
-//            if (subjectType.getCentValue().equals("智力题")) {
-//                List<Subject> subjectList = Subject.findAllBySubjectType(subjectType)
-//                allSubjectList.addAll(subjectList)
-//            } else {
                     List<Question> questionList = Question.findAllByQuestionType(questionType)
                     List<Long> ids = questionList*.id
                     List<Long> filterIds = OnlineInterviewUtil.getRandomQuestions(ids, it.count)
-
                     List<Question> filterQuestionList = questionList.findAll({ filterIds.contains(it.id) })
-//            List<Subject> filterSubjectList = []
-//            filterIds.each { Long id ->
-//                Subject subject = Subject.findById(id)
-//                filterSubjectList.add(subject)
-//            }
                     allQuestionList.addAll(filterQuestionList)
-
                 }
                 allQuestionList.each { Question question1 ->
                     Answer answer = new Answer()
@@ -115,17 +100,15 @@ class ApiController {
 
                 Map<QuestionType, List<Question>> map = allQuestionList.groupBy { it.questionType }
                 List<Question> inteQuestionList = map.get(QuestionType.INTELLIGENCE) ?: []
-
                 List<Question> baseQuestionList = map.get(QuestionType.BASE) ?: []
                 List<Question> apiQuestionList = map.get(QuestionType.API) ?: []
                 List<Question> codeQuestionList = map.get(QuestionType.CODE) ?: []
                 List<Question> extendQuestionList = map.get(QuestionType.EXTEND) ?: []
-//        }
-                log.debug("count" + allQuestionList.size())
 
+                log.debug("count" + allQuestionList.size())
                 [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList]}
 
-        }else {
+       }else {
             render (status: 401,text: "user is not authenticated")
         }
 
@@ -148,7 +131,6 @@ class ApiController {
             answer.save(flush: true)
         }
         render "success"
-
     }
 
 
@@ -177,28 +159,6 @@ class ApiController {
         List<Answer> codeAnswerList = map.get(QuestionType.CODE)?:[]
         List<Answer> extendAnswerList = map.get(QuestionType.EXTEND)?:[]
 
-//        List<SubjectType>  questionTypeList = answerList*.subject*.questionType
-//        List<QuestionType> filterQuestionTypeList = new ArrayList<>()
-//        for (SubjectType subjectType:subjectTypeList){
-//            if (!filterSubjectTypeList.contains(subjectType)){
-//                filterSubjectTypeList.add(subjectType)
-//            }
-//        }
-//        List<List<Answer>> filterAnswers = new ArrayList()
-//        filterSubjectTypeList.each { SubjectType  subjectType1 ->
-//            List <Answer> answerList2  = new ArrayList<>()
-//            for(Answer answer:answerList){
-//
-//                if (answer.subject.subjectType.centValue.equals(subjectType1.centValue) ){
-//                    answerList2.add(answer)
-//                }
-//
-//            }
-//
-//            filterAnswers.add(answerList2)
-//
-//        }
-
         [INTELLIGENCE: inteAnswerList, BASE: baseAnswerList, API: apiAnswerList, CODE: codeAnswerList, EXTEND: extendAnswerList]
 
     }
@@ -206,18 +166,13 @@ class ApiController {
 
     def getUser(){
         Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
-        Long userId
         if (userIdCookie){
-            userId = userIdCookie.value as Long
-        }
-        if (userId==null){
-            render (status: 401,text: "user is not authenticated")
+        long userId = userIdCookie.value as Long
+            render(User.findById(userId))
         }else {
-            User user = User.findById(userId)
-            render user as JSON
+            render (status: 401,text: "user is not authenticated")
         }
     }
-
 
 }
 
