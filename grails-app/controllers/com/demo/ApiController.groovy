@@ -168,7 +168,8 @@ class ApiController {
         Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
         if (userIdCookie){
         long userId = userIdCookie.value as Long
-            render(User.findById(userId))
+            User user = User.findById(userId)
+            render user as JSON
         }else {
             render (status: 401,text: "user is not authenticated")
         }
