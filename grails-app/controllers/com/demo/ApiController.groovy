@@ -3,7 +3,9 @@ package com.demo
 import com.demo.local.Answer
 import com.demo.local.Question
 import com.demo.local.QuestionType
-import com.demo.local.User
+import com.demo.local.auth.Role
+import com.demo.local.auth.User
+import com.demo.local.auth.UserRole
 import com.demo.local.utils.OnlineInterviewUtil
 import grails.converters.JSON
 
@@ -42,6 +44,8 @@ class ApiController {
         user.interviewDate = new Date()
         user.checked = false
         user.save(flush:true)
+        def roleUser = Role.findByAuthority("ROLE_USER") ?: new Role(authority: "ROLE_USER").save(flush: true)
+        UserRole.create(user, roleUser, true)
         String userId = user.id.toString()
         Cookie cookie = new Cookie( "userId", userId )
         cookie.maxAge = 7200
@@ -122,9 +126,9 @@ class ApiController {
      * 添加答题参数信息
      * @param answerDTO
      * @return
-     * curl -d '{"answerList":[{"user":{"id":4},"answerInfo":"A","question":{"id":1}},{"user":{"id":4},"answerInfo":"B","question":{"id":5}}]}' -H "Content-Type: application/json"    http://localhost:8080/api/addAnswerInfos
+     * curl -d '{"answerList":[{"user":{"id":4},"answerInfo":"A","question":{"id":1}},{"user":{"id":4},"answerInfo":"B","question":{"id":5}}]}' -H "Content-Type: application/json"    http://localhost:8080/api/commitAnswers
      */
-    def addAnswerInfos(AnswerDTO answerDTO) {
+    def commitAnswers(AnswerDTO answerDTO) {
         List<Answer> answerList = answerDTO.answerList
         answerList.each { Answer answer ->
             answer.createDate = new Date()
@@ -134,7 +138,7 @@ class ApiController {
     }
 
 
-    def addAnswer(Answer answer) {
+    def commitAnswer(Answer answer) {
         answer.createDate = new Date()
         answer.save(flush:true)
         render answer as JSON

@@ -1,4 +1,6 @@
 package com.demo.local
+
+import com.demo.local.auth.User
 import grails.compiler.GrailsCompileStatic
 
 @GrailsCompileStatic
