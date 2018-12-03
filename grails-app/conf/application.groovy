@@ -23,10 +23,10 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/test/admin', access: adminPermission],
 	[pattern: '/test/noCheck', access: allPermission],
 	[pattern: '/api/addUser', access: allPermission],
-	[pattern: '/api/addAnswer', access: userPermission],
+	[pattern: '/api/commitAnswer', access: userPermission],
 	[pattern: '/api/addQuestion', access: adminPermission],
 	[pattern: '/api/questions', access: userPermission],
-	[pattern: '/api/addAnswerInfos', access: userPermission],
+	[pattern: '/api/commitAnswers', access: userPermission],
 	[pattern: '/api/questionInfos', access: adminPermission],
 	[pattern: '/api/getUser', access: adminPermission]
 ]

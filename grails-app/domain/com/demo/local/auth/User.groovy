@@ -5,8 +5,8 @@ import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
 
 @GrailsCompileStatic
-@EqualsAndHashCode(includes='username')
-@ToString(includes='username', includeNames=true, includePackage=false)
+@EqualsAndHashCode(includes = 'username')
+@ToString(includes = 'username', includeNames = true, includePackage = false)
 class User implements Serializable {
 
     private static final long serialVersionUID = 1
@@ -18,13 +18,13 @@ class User implements Serializable {
     boolean accountLocked
     boolean passwordExpired
 
-    Boolean gender
-    int age
-    String phoneNumber
-    Boolean checked
+    boolean gender = true
+    int age = 0
+    String phoneNumber = ''
+    Boolean checked = false
     Date interviewDate
-    int totalScore
-    String comment
+    int totalScore = 0
+    String comment = ''
 
 
     Set<Role> getAuthorities() {
@@ -33,13 +33,11 @@ class User implements Serializable {
 
     static constraints = {
         password nullable: false, blank: false, password: true
-        username nullable: false, blank: false, unique: true
-        comment nullable: true
-
+        username nullable: false, blank: false
     }
 
     static mapping = {
-	    password column: '`password`'
+        password column: '`password`'
         version false
 
     }

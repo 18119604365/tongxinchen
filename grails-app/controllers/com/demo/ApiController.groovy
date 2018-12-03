@@ -13,7 +13,7 @@ import javax.servlet.http.Cookie
 
 class ApiController {
 
-
+    def springSecurityService
     def index() {}
 
     /**
@@ -39,21 +39,12 @@ class ApiController {
      * @return
      * curl -d '{"name":"知乎","phoneNumber":"18111212309","age":"24","gender":"true"}' -H "Content-Type: application/json" http://localhost:8080/api/addUser
      */
-    def addUser(User user){
-        log.debug("name="+user.name)
+    def addUser(User user) {
         user.interviewDate = new Date()
-        user.checked = false
-        user.save(flush:true)
-        def roleUser = Role.findByAuthority("ROLE_USER") ?: new Role(authority: "ROLE_USER").save(flush: true)
+        user.save(flush: true)
+        def roleUser = Role.findByAuthority("ROLE_USER")
         UserRole.create(user, roleUser, true)
-        String userId = user.id.toString()
-        Cookie cookie = new Cookie( "userId", userId )
-        cookie.maxAge = 7200
-        response.addCookie (cookie)
-
-
         render user as JSON
-
     }
 
     /**
@@ -65,12 +56,14 @@ class ApiController {
 
 
     def questions(QuestionsDTO questionDTO) {
-        Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
-        if (userIdCookie){
-            long userId = userIdCookie.value as Long
-            User user1 = User.findById(userId)
-            List<Answer> answerList = Answer.findAllByUser(user1)
-            if (answerList.size()>0){
+//        Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
+
+        def user = springSecurityService.getCurrentUser()
+        if (user) {
+//            long userId = userIdCookie.value as Long
+//            User user1 = User.findById(userId)
+            List<Answer> answerList = Answer.findAllByUser(user)
+            if (answerList.size() > 0) {
                 List<Question> questionList = answerList*.question
                 Map<QuestionType, List<Question>> map = questionList.groupBy { it.questionType }
                 List<Question> inteQuestionList = map.get(QuestionType.INTELLIGENCE) ?: []
@@ -81,7 +74,8 @@ class ApiController {
 
                 log.debug("count" + questionList.size())
                 [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList]
-            }else {List<Question> allQuestionList = []
+            } else {
+                List<Question> allQuestionList = []
                 List<QuestionDTO> questionDTOList = questionDTO.questionDTOList
 
                 questionDTOList.each {
@@ -94,7 +88,7 @@ class ApiController {
                 }
                 allQuestionList.each { Question question1 ->
                     Answer answer = new Answer()
-                    answer.user = User.findById(userId)
+                    answer.user = user
                     answer.createDate = new Date()
                     answer.question = question1
                     answer.answerInfo = ""
@@ -110,17 +104,15 @@ class ApiController {
                 List<Question> extendQuestionList = map.get(QuestionType.EXTEND) ?: []
 
                 log.debug("count" + allQuestionList.size())
-                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList]}
+                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList]
+            }
 
-       }else {
-            render (status: 401,text: "user is not authenticated")
+        } else {
+            render(status: 401, text: "user is not authenticated")
         }
 
 
-
     }
-
-
 
     /**
      * 添加答题参数信息
@@ -140,7 +132,7 @@ class ApiController {
 
     def commitAnswer(Answer answer) {
         answer.createDate = new Date()
-        answer.save(flush:true)
+        answer.save(flush: true)
         render answer as JSON
 
     }
@@ -157,25 +149,26 @@ class ApiController {
         user.save(flush: true)
         List<Answer> answerList = Answer.findAllByUser(user, ["sort": "id", "order": "asc"])
         Map<QuestionType, List<Answer>> map = answerList.groupBy { it.question.questionType }
-        List<Answer> inteAnswerList = map.get(QuestionType.INTELLIGENCE)?:[]
-        List<Answer> baseAnswerList = map.get(QuestionType.BASE)?:[]
-        List<Answer> apiAnswerList = map.get(QuestionType.API)?:[]
-        List<Answer> codeAnswerList = map.get(QuestionType.CODE)?:[]
-        List<Answer> extendAnswerList = map.get(QuestionType.EXTEND)?:[]
+        List<Answer> inteAnswerList = map.get(QuestionType.INTELLIGENCE) ?: []
+        List<Answer> baseAnswerList = map.get(QuestionType.BASE) ?: []
+        List<Answer> apiAnswerList = map.get(QuestionType.API) ?: []
+        List<Answer> codeAnswerList = map.get(QuestionType.CODE) ?: []
+        List<Answer> extendAnswerList = map.get(QuestionType.EXTEND) ?: []
 
         [INTELLIGENCE: inteAnswerList, BASE: baseAnswerList, API: apiAnswerList, CODE: codeAnswerList, EXTEND: extendAnswerList]
 
     }
 
 
-    def getUser(){
-        Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
-        if (userIdCookie){
-        long userId = userIdCookie.value as Long
-            User user = User.findById(userId)
+    def getUser() {
+//        Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
+        def user = springSecurityService.getCurrentUser()
+        if (user) {
+//            long userId = userIdCookie.value as Long
+//            User user = User.findById(userId)
             render user as JSON
-        }else {
-            render (status: 401,text: "user is not authenticated")
+        } else {
+            render(status: 401, text: "user is not authenticated")
         }
     }
 
