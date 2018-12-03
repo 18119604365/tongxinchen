@@ -160,18 +160,18 @@ class ApiController {
     }
 
 
-    def getUser() {
-//        Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
-        def user = springSecurityService.getCurrentUser()
-        if (user) {
-//            long userId = userIdCookie.value as Long
-//            User user = User.findById(userId)
-            render user as JSON
-        } else {
-            render(status: 401, text: "user is not authenticated")
-        }
-    }
-
+//    def getUser() {
+////        Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
+//        def user = springSecurityService.getCurrentUser()
+//        if (user) {
+////            long userId = userIdCookie.value as Long
+////            User user = User.findById(userId)
+//            render user as JSON
+//        } else {
+//            render(status: 401, text: "user is not authenticated")
+//        }
+//    }
+//
 }
 
 

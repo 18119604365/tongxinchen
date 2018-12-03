@@ -27,8 +27,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/api/addQuestion', access: adminPermission],
 	[pattern: '/api/questions', access: userPermission],
 	[pattern: '/api/commitAnswers', access: userPermission],
-	[pattern: '/api/questionInfos', access: adminPermission],
-	[pattern: '/api/getUser', access: adminPermission]
+	[pattern: '/api/questionInfos', access: adminPermission]
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [
