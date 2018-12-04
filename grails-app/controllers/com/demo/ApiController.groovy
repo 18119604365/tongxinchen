@@ -9,8 +9,6 @@ import com.demo.local.auth.UserRole
 import com.demo.local.utils.OnlineInterviewUtil
 import grails.converters.JSON
 
-import javax.servlet.http.Cookie
-
 class ApiController {
 
     def springSecurityService
@@ -160,18 +158,12 @@ class ApiController {
     }
 
 
-//    def getUser() {
-////        Cookie userIdCookie = request.getCookies().find { 'userId' == it.name }
-//        def user = springSecurityService.getCurrentUser()
-//        if (user) {
-////            long userId = userIdCookie.value as Long
-////            User user = User.findById(userId)
-//            render user as JSON
-//        } else {
-//            render(status: 401, text: "user is not authenticated")
-//        }
-//    }
-//
+
+    def getMyInfo(){
+        def user = springSecurityService.getCurrentUser()
+
+            render (user as JSON)
+    }
 }
 
 

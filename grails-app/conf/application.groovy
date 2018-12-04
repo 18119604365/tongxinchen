@@ -27,7 +27,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/api/addQuestion', access: adminPermission],
 	[pattern: '/api/questions', access: userPermission],
 	[pattern: '/api/commitAnswers', access: userPermission],
-	[pattern: '/api/questionInfos', access: adminPermission]
+	[pattern: '/api/questionInfos', access: adminPermission],
+	[pattern: '/api/getMyInfo', access: userPermission]
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [
@@ -38,4 +39,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 	[pattern: '/**/favicon.ico', filters: 'none'],
 	[pattern: '/**',             filters: 'JOINED_FILTERS']
 ]
+
+grails.plugin.springsecurity.rest.token.storage.jwt.secret="onlineexamonlineexamonlineexamonlineexamonlineexam"
+grails.plugin.springsecurity.rest.token.storage.jwt.expiration = 14400
 
