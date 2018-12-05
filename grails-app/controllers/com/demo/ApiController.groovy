@@ -119,9 +119,11 @@ class ApiController {
      * curl -d '{"answerList":[{"user":{"id":4},"answerInfo":"A","question":{"id":1}},{"user":{"id":4},"answerInfo":"B","question":{"id":5}}]}' -H "Content-Type: application/json"    http://localhost:8080/api/commitAnswers
      */
     def commitAnswers(AnswerDTO answerDTO) {
+        def user = springSecurityService.getCurrentUser()
         List<Answer> answerList = answerDTO.answerList
         answerList.each { Answer answer ->
             answer.createDate = new Date()
+            answer.user = user
             answer.save(flush: true)
         }
         render "success"
@@ -129,7 +131,9 @@ class ApiController {
 
 
     def commitAnswer(Answer answer) {
+        def user = springSecurityService.getCurrentUser()
         answer.createDate = new Date()
+        answer.user = user
         answer.save(flush: true)
         render answer as JSON
 
