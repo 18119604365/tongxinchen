@@ -71,7 +71,7 @@ class ApiController {
                 List<Question> extendQuestionList = map.get(QuestionType.EXTEND) ?: []
 
                 log.debug("count" + questionList.size())
-                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList]
+                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList,ANSWER:answerList ]
             } else {
                 List<Question> allQuestionList = []
                 List<QuestionDTO> questionDTOList = questionDTO.questionDTOList
@@ -100,9 +100,9 @@ class ApiController {
                 List<Question> apiQuestionList = map.get(QuestionType.API) ?: []
                 List<Question> codeQuestionList = map.get(QuestionType.CODE) ?: []
                 List<Question> extendQuestionList = map.get(QuestionType.EXTEND) ?: []
-
+                List<Answer> newAnswerList = Answer.findAllByUser(user)
                 log.debug("count" + allQuestionList.size())
-                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList]
+                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList,ANSWER: newAnswerList]
             }
 
         } else {
