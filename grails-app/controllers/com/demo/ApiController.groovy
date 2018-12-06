@@ -71,7 +71,7 @@ class ApiController {
                 List<Question> extendQuestionList = map.get(QuestionType.EXTEND) ?: []
 
                 log.debug("count" + questionList.size())
-                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList,ANSWER:answerList ]
+                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList ]
             } else {
                 List<Question> allQuestionList = []
                 List<QuestionDTO> questionDTOList = questionDTO.questionDTOList
@@ -100,9 +100,9 @@ class ApiController {
                 List<Question> apiQuestionList = map.get(QuestionType.API) ?: []
                 List<Question> codeQuestionList = map.get(QuestionType.CODE) ?: []
                 List<Question> extendQuestionList = map.get(QuestionType.EXTEND) ?: []
-                List<Answer> newAnswerList = Answer.findAllByUser(user)
+//                List<Answer> newAnswerList = Answer.findAllByUser(user)
                 log.debug("count" + allQuestionList.size())
-                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList,ANSWER: newAnswerList]
+                [INTELLIGENCE: inteQuestionList, BASE: baseQuestionList, API: apiQuestionList, CODE: codeQuestionList, EXTEND: extendQuestionList]
             }
 
         } else {
@@ -110,6 +110,12 @@ class ApiController {
         }
 
 
+    }
+
+    def getAnswers(){
+        def user = springSecurityService.getCurrentUser()
+        List<Answer> answerList = Answer.findAllByUser(user)
+        render (answerList as JSON)
     }
 
     /**

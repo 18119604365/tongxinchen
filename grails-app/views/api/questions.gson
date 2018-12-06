@@ -7,7 +7,7 @@ model {
     List<Question> API
     List<Question> CODE
     List<Question> EXTEND
-    List<Answer> ANSWER
+//    List<Answer> ANSWER
 
 
 
@@ -48,11 +48,11 @@ json {
         questionType question.questionType
         content question.content
     }
-    ANSWER(ANSWER){
-        Answer answer = (Answer) it
-        id answer.id
-        userId answer.user.id
-        questionId answer.question.id
-        answerInfo answer.answerInfo
-    }
+//    ANSWER(ANSWER){
+//        Answer answer = (Answer) it
+//        id answer.id
+//        user answer.user
+//        question answer.question
+//        answerInfo answer.answerInfo
+//    }
 }
