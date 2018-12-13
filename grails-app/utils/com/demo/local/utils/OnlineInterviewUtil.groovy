@@ -14,14 +14,16 @@ class OnlineInterviewUtil {
                 //获取随机下标
                 index = random.nextInt(size - i);
                 //给randomIds赋值
-                ids.add(ids.get(index));
+//                ids.add(ids.get(index));
+                long needExchangeId =ids.get(index);
                 //随机的下标的元素和位置最后一位没有使用过的元素换取位置
                 ids.set(index, ids.get(size - i - 1))
+                ids.set(size - i - 1,needExchangeId)
 //                ids.set(ids.size() - i - 1, ids.get(size + i))
 //                ids[index] = ids[size - i - 1];
 //                ids[ids.length - i - 1] = randomIds.get(i)
             }
-            return ids.subList(size, size + count);
+            return ids.subList(size-count, size);
         }
 
     }
