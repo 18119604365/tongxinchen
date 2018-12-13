@@ -33,4 +33,11 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
+if (!Environment.currentEnvironment.name.startsWith('prod')) {
+    logger("com", DEBUG, ['STDOUT'], false)
+    logger("com", DEBUG, ['STDOUT'], false)
+} else {
+    logger("com", INFO, ['STDOUT'], false)
+    logger("com", INFO, ['STDOUT'], false)
+}
 root(ERROR, ['STDOUT'])
