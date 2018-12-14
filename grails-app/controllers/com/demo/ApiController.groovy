@@ -128,6 +128,9 @@ class ApiController {
         def user = springSecurityService.getCurrentUser()
         List<Answer> answerList = answerDTO.answerList
         answerList.each { Answer answer ->
+            if (answer == null){
+                return
+            }
             answer.createDate = new Date()
             answer.user = user
             answer.save(flush: true)
