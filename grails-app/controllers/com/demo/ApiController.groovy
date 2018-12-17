@@ -118,6 +118,12 @@ class ApiController {
         render (answerList as JSON)
     }
 
+    def getUserAnswers(long userId){
+        def user = User.findById(userId);
+        List<Answer> answerList = Answer.findAllByUser(user)
+        render (answerList as JSON)
+    }
+
     /**
      * 添加答题参数信息
      * @param answerDTO
@@ -153,7 +159,7 @@ class ApiController {
  * para userId
  * curl -d'userId=4' http://localhost:8080/api/questionInfos
  */
-    def questionInfos(long userId) {
+    def answerInfos(long userId) {
         log.debug("userId" + userId)
         User user = User.findById(userId)
         user.checked = true

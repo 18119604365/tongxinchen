@@ -17,6 +17,7 @@ json {
         questionId answer.question.id
         questionType answer.question.questionType
         content answer.question.content
+        options answer.question.options
         answerInfo answer.answerInfo
 
     }
